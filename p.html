@@ -6,6 +6,30 @@
 			background: #dddddd;
 			canvas.style = "position:absolute; left: 50%; width: 400px; margin-left: -200px;";
 		}
+		button {
+			box-shadow:inset 0px 0px 3px 0px #91b8b3;
+			background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+			background-color:#768d87;
+			border-radius:5px;
+			border:1px solid #D3D3D3;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial;
+			font-size:15px;
+			font-weight:bold;
+			padding:14px 46px;
+			text-decoration:none;
+			text-shadow:0px -1px 0px #2b665e;
+		}
+		button:hover {
+			background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+			background-color:#6c7c7c;
+		}
+		button:active {
+			position:relative;
+			top:1px;
+		}
 	</style>
 
 	<script>
@@ -39,20 +63,24 @@
 				this.player = player;
 			}
 			attack(other){
-				
+				other.health -= this.attack;
 			}
+			damageTaken(other){
+				this.health -= other.attack;
+			}
+			
 			// The pokemon draws itself on the screen
 			draw(){
 				c.drawImage(this.img, this.x, this.y, this.width, this.height);
 			}
 		}	
 		
-		var vikings = new pokemon(0, 0, 0, 0, "a", 0, true, false, false);
-		var saxon = new pokemon(0, 0, 0, 0, "a", 0, true, false, false);
-		var cougar = new pokemon(0, 0, 0, 0, "a", 0, true, false, false);
-		var hawk = new pokemon(0, 0, 0, 0, "a", 0, true, false, false);
-		var pirate = new pokemon(0, 0, 0, 0, "a", 0, true, false, false);
-		var harper = new pokemon(0, 0, 0, 0, "a", 0, true, false, false);
+		var vikings = new pokemon(0, 0, 0, 0, "viking.png", 0, true, false, false);
+		var saxon = new pokemon(0, 0, 0, 0, "saxon.png", 0, true, false, false);
+		var cougar = new pokemon(0, 0, 0, 0, "cougar.png", 0, true, false, false);
+		var hawk = new pokemon(0, 0, 0, 0, "hawks.png", 0, true, false, false);
+		var pirate = new pokemon(0, 0, 0, 0, "pirate.png", 0, true, false, false);
+		var harper = new pokemon(0, 0, 0, 0, "dude.png", 0, true, false, false);
 		
 		var userArray = [];
 		var compArray = [];
@@ -70,7 +98,9 @@
 		// Stores keys that have been newly pressed since last update
 		var newkeys = [];
 
-
+		function changePoke(){
+			
+		}
 
 		// Initializes entire game framework. This method should only be called
 		// once, by the body onload event handler.
@@ -106,18 +136,23 @@
 			// again before the NEXT repaint, and so on.
 			window.requestAnimationFrame(gameUpdate);
 		}
+		
+		function damage(){
+			userArray[0].attack(compArray[0]);
+		}
 
 
 		function gameUpdate(){
 		
 			if (gameState == "instructions"){
+				//enter
 				if (curkeys[13]){
 					gameState = "choose";
 				}
 			}
 			else if (gameState == "choose"){
-				var
 				while (userArray.length < 3){
+					// key "1"
 					if (curkeys[49])
 					{
 						viking.x = userX;
@@ -135,7 +170,7 @@
 						saxon.player = true;
 						userArray.push(saxon);
 					}
-					else if (curkeys[51){
+					else if (curkeys[51]){
 						cougar.x = userX;
 						cougar.y = userY;
 						cougar.width = userWidth;
@@ -220,6 +255,8 @@
 			
 			}
 			else{
+				userArray[0].isVisible = true;
+				compArray[0].isVisible = true;
 				
 			}
 
@@ -253,7 +290,7 @@
 				output += "You will be able to attack the opponent with x ";
 				c.fillText(output, 100, 300);
 			}
-			else if (gameState == "play){
+			else if (gameState == "play"){
 				var output = "1. Viking\n2.Saxon\n3.Cougar\n4.Hawk\n5.Pirate\n6.Harper student";
 				c.fillText(output, 100, 300);
 			}
@@ -268,8 +305,11 @@
 
 <body onload="gameFrameworkInit()">
 	
-	<canvas id="myCanvas" width="800" height="800"></canvas>
-
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+	<br>
+	<div id="idDivOutput"></div>
+	<button class="button">Button1</button onClick="damage()">
+	<button class="button">Button2</button>
 </body>
 
 
