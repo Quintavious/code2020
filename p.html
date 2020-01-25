@@ -22,7 +22,7 @@
 		var gameState = "instructions";
 	
 		class pokemon{
-			constructor(x, y, width, height, image, attack, isAlive, isVisible, player){
+			constructor(x, y, width, height, image, attack, health, isAlive, isVisible, player){
 			// ADD YOUR CONSTRUCTOR CODE HERE FOR THE FOLLOWING ATTRIBUTES:
 				// x, y, width, height, img
 				this.x = x;
@@ -32,10 +32,14 @@
 				this.img = new Image();
 				this.img.src = image;
 				this.attack = attack;
+				this.health = health;
 				// boolean
 				this.isAlive = isAlive;
 				this.isVisible = isVisible;
 				this.player = player;
+			}
+			attack(other){
+				
 			}
 			// The pokemon draws itself on the screen
 			draw(){
@@ -107,88 +111,117 @@
 		function gameUpdate(){
 		
 			if (gameState == "instructions"){
-				var output = "You are able to choose three Pokemon, that in which your opponent will choose the other three";
-				output += "You will be able to attack the opponent with x ";
 				if (curkeys[13]){
 					gameState = "choose";
 				}
 			}
 			else if (gameState == "choose"){
-				if (curkeys[49])
-				{
-					viking.x = userX;
-					viking.y = userY;
-					viking.width = userWidth;
-					viking.height = userHeight;
-					viking.player = true;
-					userArray.push(viking);
-				}
-				else if (curkeys[50]){
-					saxon.x = userX;
-					saxon.y = userY;
-					saxon.width = userWidth;
-					saxon.height = userHeight;
-					saxon.player = true;
-					userArray.push(saxon);
-				}
-				else if (curkeys[51){
-					cougar.x = userX;
-					cougar.y = userY;
-					cougar.width = userWidth;
-					cougar.height = userHeight;
-					cougar.player = true;
-					userArray.push(cougar);
-				}
-				else if (curkeys[52]){
-					hawk.x = userX;
-					hawk.y = userY;
-					hawk.width = userWidth;
-					hawk.height = userHeight;
-					hawk.player = true;
-					userArray.push(hawk);
-				}
-				else if (curkeys[53]){
-					pirate.x = userX;
-					pirate.y = userY;
-					pirate.width = userWidth;
-					pirate.height = userHeight;
-					pirate.player = true;
-					userArray.push(pirate);
-				}
-				else if (curkeys[54]){
-					harper.x = userX;
-					harper.y = userY;
-					harper.width = userWidth;
-					harper.height = userHeight;
-					harper.player = true;
-					userArray.push(harper);
+				var
+				while (userArray.length < 3){
+					if (curkeys[49])
+					{
+						viking.x = userX;
+						viking.y = userY;
+						viking.width = userWidth;
+						viking.height = userHeight;
+						viking.player = true;
+						userArray.push(viking);
+					}
+					else if (curkeys[50]){
+						saxon.x = userX;
+						saxon.y = userY;
+						saxon.width = userWidth;
+						saxon.height = userHeight;
+						saxon.player = true;
+						userArray.push(saxon);
+					}
+					else if (curkeys[51){
+						cougar.x = userX;
+						cougar.y = userY;
+						cougar.width = userWidth;
+						cougar.height = userHeight;
+						cougar.player = true;
+						userArray.push(cougar);
+					}
+					else if (curkeys[52]){
+						hawk.x = userX;
+						hawk.y = userY;
+						hawk.width = userWidth;
+						hawk.height = userHeight;
+						hawk.player = true;
+						userArray.push(hawk);
+					}
+					else if (curkeys[53]){
+						pirate.x = userX;
+						pirate.y = userY;
+						pirate.width = userWidth;
+						pirate.height = userHeight;
+						pirate.player = true;
+						userArray.push(pirate);
+					}
+					else if (curkeys[54]){
+						harper.x = userX;
+						harper.y = userY;
+						harper.width = userWidth;
+						harper.height = userHeight;
+						harper.player = true;
+						userArray.push(harper);
+					}
 				}
 				if (userArray.length == 3)
 				{
 					if (viking.player == false){
-						compArray,push(vikings);
+						viking.x = compX;
+						viking.y = compY;
+						viking.width = compWidth;
+						viking.height = compHeight;
+						compArray,push(viking);
 					}
 					else if (saxon.player == false){
+						saxon.x = compX;
+						saxon.y = compY;
+						saxon.width = compWidth;
+						saxon.height = compHeight;
 						compArray.push(saxon);
 					}
 					else if (cougar.player == false){
+						cougar.x = compX;
+						cougar.y = compY;
+						cougar.width = compWidth;
+						cougar.height = compHeight;
 						compArray.push(cougar);
 					}
 					else if (hawk.player == false){
+						hawk.x = compX;
+						hawk.y = compY;
+						hawk.width = compWidth;
+						hawk.height = compHeight;
 						compArray.push(hawk);
 					}
 					else if (pirate.player == false){
+						pirate.x = compX;
+						pirate.y = compY;
+						pirate.width = compWidth;
+						pirate.height = compHeight;
 						compArray.push(pirate);
 					}
 					else if (harper.player == false){
+						harper.x = compX;
+						harper.y = compY;
+						harper.width = compWidth;
+						harper.height = compHeight;
 						compArray.push(harper);
 					}
 					
 				}
-				
+				if (userArray.length == 3 && compArray.length == 3 && curkeys[13]){
+					gameState = "play";
+				}
 			
 			}
-			
+			else{
+				
+			}
 
 
 			// DO NOT ADD OR MODIFY ANY CODE BELOW HERE
@@ -215,7 +248,15 @@
 			var bg = new Image();
 			bg.src = "background.png";
 			c.drawImage(bg, 0, 0, 800, 800);
-
+			if (gameState == "instructions"){
+				var output = "You are able to choose three Pokemon, that in which your opponent will choose the other three";
+				output += "You will be able to attack the opponent with x ";
+				c.fillText(output, 100, 300);
+			}
+			else if (gameState == "play){
+				var output = "1. Viking\n2.Saxon\n3.Cougar\n4.Hawk\n5.Pirate\n6.Harper student";
+				c.fillText(output, 100, 300);
+			}
 			
 		}
 
